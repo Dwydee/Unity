@@ -4,16 +4,45 @@ using UnityEngine;
 
 public class BallControler : MonoBehaviour
 {
-    public GameObject Ball;
-    // Start is called before the first frame update
+    public float speed = 5f;
+    public float jumpforce = 300f;
+    public Color color = Color.blue;
+
+    Rigidbody rb;
+    Renderer r;
+    bool isGrounded;
+
+    
     void Start()
     {
-        transform.Translate(3, 4, 4);
+        rb = GetComponent<Rigidbody>();
+        r = gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
+        transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.AddForce(0, jumpforce, 0);
+        }
         
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isGrounded = true;
+        collision.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+        
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isGrounded = false;
+        collision.gameObject.GetComponent<MeshRenderer>().material.color = default;
+        
+    }
+
+
 }
