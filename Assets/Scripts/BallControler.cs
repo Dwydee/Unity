@@ -16,7 +16,6 @@ public class BallControler : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        r = gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
     }
 
     
@@ -33,14 +32,15 @@ public class BallControler : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         isGrounded = true;
-        collision.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+        collision.gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
         
     }
 
     private void OnCollisionExit(Collision collision)
     {
         isGrounded = false;
-        collision.gameObject.GetComponent<MeshRenderer>().material.color = default;
+        
+        collision.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
         
     }
 
